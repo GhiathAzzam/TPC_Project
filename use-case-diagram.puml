@@ -1,0 +1,154 @@
+@startuml Manufacturing Management System - Use Case Diagram
+
+left to right direction
+
+' Define actors
+actor "Admin" as admin
+actor "Accountant" as accountant
+actor "Warehouse Keeper" as warehouse
+actor "System" as system
+
+' Define use case packages
+package "User Management" {
+    usecase "Register Users" as UC1
+    usecase "Manage User Accounts" as UC2
+    usecase "Change User Activation" as UC3
+    usecase "View Activity Logs" as UC4
+}
+
+package "Authentication" {
+    usecase "Login" as UC5
+    usecase "Logout" as UC6
+    usecase "Update Profile" as UC7
+}
+
+package "Material Management" {
+    usecase "Manage Raw Materials" as UC8
+    usecase "Manage Raw Material Batches" as UC9
+    usecase "Track Damaged Materials" as UC10
+    usecase "Search Materials" as UC11
+}
+
+package "Product Management" {
+    usecase "Manage Products" as UC12
+    usecase "Manage Product Batches" as UC13
+    usecase "Define Product Materials (BOM)" as UC14
+    usecase "Convert Materials to Products" as UC15
+    usecase "Update Product Prices" as UC16
+}
+
+package "Financial Management" {
+    usecase "Manage Expenses" as UC17
+    usecase "Manage Expense Categories" as UC18
+    usecase "Record Product Sales" as UC19
+    usecase "Manage Production Settings" as UC20
+}
+
+package "Reporting" {
+    usecase "Generate Profit/Loss Reports" as UC21
+    usecase "Generate Product Summary Reports" as UC22
+    usecase "View Monthly Sales" as UC23
+    usecase "Refresh Reports" as UC24
+}
+
+package "Notifications" {
+    usecase "View Notifications" as UC25
+    usecase "Mark Notifications as Read" as UC26
+}
+
+package "System Operations" {
+    usecase "Log Activities" as UC27
+    usecase "Send Notifications" as UC28
+    usecase "Generate Reports" as UC29
+}
+
+' Admin relationships
+admin --> UC1
+admin --> UC2
+admin --> UC3
+admin --> UC4
+admin --> UC5
+admin --> UC6
+admin --> UC7
+admin --> UC8
+admin --> UC9
+admin --> UC10
+admin --> UC11
+admin --> UC12
+admin --> UC13
+admin --> UC14
+admin --> UC15
+admin --> UC16
+admin --> UC17
+admin --> UC18
+admin --> UC19
+admin --> UC20
+admin --> UC21
+admin --> UC22
+admin --> UC23
+admin --> UC24
+admin --> UC25
+admin --> UC26
+
+' Accountant relationships
+accountant --> UC5
+accountant --> UC6
+accountant --> UC7
+accountant --> UC17
+accountant --> UC18
+accountant --> UC19
+accountant --> UC20
+accountant --> UC21
+accountant --> UC22
+accountant --> UC23
+accountant --> UC24
+accountant --> UC25
+accountant --> UC26
+
+' Warehouse Keeper relationships
+warehouse --> UC5
+warehouse --> UC6
+warehouse --> UC7
+warehouse --> UC8
+warehouse --> UC9
+warehouse --> UC10
+warehouse --> UC11
+warehouse --> UC12
+warehouse --> UC13
+warehouse --> UC14
+warehouse --> UC15
+warehouse --> UC16
+warehouse --> UC25
+warehouse --> UC26
+
+' System relationships
+system --> UC27
+system --> UC28
+system --> UC29
+
+' Include relationships
+UC8 ..> UC11 : <<include>>
+UC12 ..> UC11 : <<include>>
+UC19 ..> UC21 : <<include>>
+UC19 ..> UC22 : <<include>>
+UC21 ..> UC29 : <<include>>
+UC22 ..> UC29 : <<include>>
+UC1 ..> UC27 : <<include>>
+UC2 ..> UC27 : <<include>>
+UC8 ..> UC27 : <<include>>
+UC12 ..> UC27 : <<include>>
+UC17 ..> UC27 : <<include>>
+UC19 ..> UC27 : <<include>>
+
+' Extend relationships
+UC24 ..> UC22 : <<extend>>
+UC26 ..> UC25 : <<extend>>
+UC16 ..> UC12 : <<extend>>
+
+' Notes
+note right of UC4 : "Admin can view all \nuser activities and changes"
+note right of UC15 : "Process to convert raw \nmaterials into products"
+note right of UC21 : "Automated calculation \nbased on sales and expenses"
+note right of UC27 : "System automatically logs \nall user activities"
+
+@enduml
