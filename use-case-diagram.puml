@@ -1,35 +1,39 @@
 @startuml Manufacturing Management System - Use Case Diagram
 
-left to right direction
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam packageStyle rectangle
+skinparam usecaseBackgroundColor #E8F4FD
+skinparam actorBackgroundColor #F0F8FF
+skinparam packageBackgroundColor #F5F5F5
+skinparam roundcorner 10
 
-' Define actors
-actor "Admin" as admin
-actor "Accountant" as accountant
-actor "Warehouse Keeper" as warehouse
-actor "System" as system
+title Manufacturing Management System - Use Case Diagram
 
-' Define use case packages
-package "User Management" {
+' Define actors with better positioning
+actor "Admin" as admin #FFE4B5
+actor "Accountant" as accountant #E6FFE6
+actor "Warehouse Keeper" as warehouse #FFE6E6
+actor "System" as system #E6E6FA
+
+' Core System Packages with logical grouping
+package "👤 User & Authentication" as UserAuth #F0F8FF {
     usecase "Register Users" as UC1
+    usecase "Login/Logout" as UC5
+    usecase "Update Profile" as UC7
     usecase "Manage User Accounts" as UC2
     usecase "Change User Activation" as UC3
     usecase "View Activity Logs" as UC4
 }
 
-package "Authentication" {
-    usecase "Login" as UC5
-    usecase "Logout" as UC6
-    usecase "Update Profile" as UC7
-}
-
-package "Material Management" {
+package "📦 Inventory Management" as Inventory #F0FFF0 {
     usecase "Manage Raw Materials" as UC8
     usecase "Manage Raw Material Batches" as UC9
-    usecase "Track Damaged Materials" as UC10
     usecase "Search Materials" as UC11
+    usecase "Track Damaged Materials" as UC10
 }
 
-package "Product Management" {
+package "🏭 Production Management" as Production #FFF8F0 {
     usecase "Manage Products" as UC12
     usecase "Manage Product Batches" as UC13
     usecase "Define Product Materials (BOM)" as UC14
@@ -37,118 +41,137 @@ package "Product Management" {
     usecase "Update Product Prices" as UC16
 }
 
-package "Financial Management" {
+package "💰 Financial Operations" as Financial #FFF0F8 {
     usecase "Manage Expenses" as UC17
     usecase "Manage Expense Categories" as UC18
     usecase "Record Product Sales" as UC19
     usecase "Manage Production Settings" as UC20
 }
 
-package "Reporting" {
+package "📊 Reporting & Analytics" as Reporting #F8F0FF {
     usecase "Generate Profit/Loss Reports" as UC21
     usecase "Generate Product Summary Reports" as UC22
     usecase "View Monthly Sales" as UC23
     usecase "Refresh Reports" as UC24
 }
 
-package "Notifications" {
+package "🔔 Notifications" as Notifications #F0F0F0 {
     usecase "View Notifications" as UC25
     usecase "Mark Notifications as Read" as UC26
 }
 
-package "System Operations" {
+package "⚙️ System Operations" as SystemOps #F5F5F5 {
     usecase "Log Activities" as UC27
     usecase "Send Notifications" as UC28
     usecase "Generate Reports" as UC29
 }
 
-' Admin relationships
-admin --> UC1
-admin --> UC2
-admin --> UC3
-admin --> UC4
-admin --> UC5
-admin --> UC6
-admin --> UC7
-admin --> UC8
-admin --> UC9
-admin --> UC10
-admin --> UC11
-admin --> UC12
-admin --> UC13
-admin --> UC14
-admin --> UC15
-admin --> UC16
-admin --> UC17
-admin --> UC18
-admin --> UC19
-admin --> UC20
-admin --> UC21
-admin --> UC22
-admin --> UC23
-admin --> UC24
-admin --> UC25
-admin --> UC26
+' Admin relationships (full access)
+admin -down-> UC1
+admin -down-> UC2
+admin -down-> UC3
+admin -down-> UC4
+admin -down-> UC5
+admin -down-> UC7
 
-' Accountant relationships
-accountant --> UC5
-accountant --> UC6
-accountant --> UC7
-accountant --> UC17
-accountant --> UC18
-accountant --> UC19
-accountant --> UC20
-accountant --> UC21
-accountant --> UC22
-accountant --> UC23
-accountant --> UC24
-accountant --> UC25
-accountant --> UC26
+admin -right-> UC8
+admin -right-> UC9
+admin -right-> UC10
+admin -right-> UC11
 
-' Warehouse Keeper relationships
-warehouse --> UC5
-warehouse --> UC6
-warehouse --> UC7
-warehouse --> UC8
-warehouse --> UC9
-warehouse --> UC10
-warehouse --> UC11
-warehouse --> UC12
-warehouse --> UC13
-warehouse --> UC14
-warehouse --> UC15
-warehouse --> UC16
-warehouse --> UC25
-warehouse --> UC26
+admin -right-> UC12
+admin -right-> UC13
+admin -right-> UC14
+admin -right-> UC15
+admin -right-> UC16
 
-' System relationships
-system --> UC27
-system --> UC28
-system --> UC29
+admin -down-> UC17
+admin -down-> UC18
+admin -down-> UC19
+admin -down-> UC20
 
-' Include relationships
-UC8 ..> UC11 : <<include>>
-UC12 ..> UC11 : <<include>>
-UC19 ..> UC21 : <<include>>
-UC19 ..> UC22 : <<include>>
-UC21 ..> UC29 : <<include>>
-UC22 ..> UC29 : <<include>>
-UC1 ..> UC27 : <<include>>
-UC2 ..> UC27 : <<include>>
-UC8 ..> UC27 : <<include>>
-UC12 ..> UC27 : <<include>>
-UC17 ..> UC27 : <<include>>
-UC19 ..> UC27 : <<include>>
+admin -down-> UC21
+admin -down-> UC22
+admin -down-> UC23
+admin -down-> UC24
+
+admin -right-> UC25
+admin -right-> UC26
+
+' Accountant relationships (financial focus)
+accountant -up-> UC5
+accountant -up-> UC7
+
+accountant -up-> UC17
+accountant -up-> UC18
+accountant -up-> UC19
+accountant -up-> UC20
+
+accountant -up-> UC21
+accountant -up-> UC22
+accountant -up-> UC23
+accountant -up-> UC24
+
+accountant -right-> UC25
+accountant -right-> UC26
+
+' Warehouse Keeper relationships (inventory/production focus)
+warehouse -up-> UC5
+warehouse -up-> UC7
+
+warehouse -up-> UC8
+warehouse -up-> UC9
+warehouse -up-> UC10
+warehouse -up-> UC11
+
+warehouse -up-> UC12
+warehouse -up-> UC13
+warehouse -up-> UC14
+warehouse -up-> UC15
+warehouse -up-> UC16
+
+warehouse -right-> UC25
+warehouse -right-> UC26
+
+' System relationships (automated processes)
+system -up-> UC27
+system -up-> UC28
+system -up-> UC29
+
+' Include relationships with better visual flow
+UC8 .down.> UC11 : <<include>>
+UC12 .down.> UC11 : <<include>>
+UC19 .down.> UC21 : <<include>>
+UC19 .down.> UC22 : <<include>>
+UC21 .down.> UC29 : <<include>>
+UC22 .down.> UC29 : <<include>>
+
+' Activity logging includes
+UC1 .down.> UC27 : <<include>>
+UC2 .down.> UC27 : <<include>>
+UC8 .down.> UC27 : <<include>>
+UC12 .down.> UC27 : <<include>>
+UC17 .down.> UC27 : <<include>>
+UC19 .down.> UC27 : <<include>>
 
 ' Extend relationships
-UC24 ..> UC22 : <<extend>>
-UC26 ..> UC25 : <<extend>>
-UC16 ..> UC12 : <<extend>>
+UC24 .up.> UC22 : <<extend>>
+UC26 .up.> UC25 : <<extend>>
+UC16 .up.> UC12 : <<extend>>
 
-' Notes
-note right of UC4 : "Admin can view all \nuser activities and changes"
-note right of UC15 : "Process to convert raw \nmaterials into products"
-note right of UC21 : "Automated calculation \nbased on sales and expenses"
-note right of UC27 : "System automatically logs \nall user activities"
+' Notification trigger
+UC27 .right.> UC28 : <<trigger>>
+
+' Layout positioning hints
+UserAuth -down[hidden]-> Financial
+Inventory -down[hidden]-> Reporting
+Production -down[hidden]-> Notifications
+Financial -down[hidden]-> SystemOps
+
+' Notes with better positioning
+note top of UC4 : "Admin exclusive:\nMonitor all user activities"
+note right of UC15 : "Core Process:\nRaw materials → Products"
+note bottom of UC21 : "Auto-calculated from\nsales and expenses"
+note left of UC27 : "Automatic logging of\nall system activities"
 
 @enduml
